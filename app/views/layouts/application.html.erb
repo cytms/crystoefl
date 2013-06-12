@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CrysTOEFL</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  
+  <%= csrf_meta_tags %>
+</head>
+<body data-twttr-rendered="true">
+  <div class="container">
+    <div class="demo-headline">
+        <h1 class="demo-logo">
+          <div class="logo"></div>
+          CrysTOEFL
+          <small>Let's prepare for TOEFL!</small>
+        </h1>
+      </div>
+  <div class="row">
+    <div class="span4">
+      <div class="todo mrm">
+        <div class="todo-search">
+          <input class="todo-search-field" type="search" value="" placeholder="Search">
+        </div>
+        <ul>
+          <li id="1" class="">
+            <div class="todo-icon"><i class="icon-time"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Archaeology & History
+              </h4>
+            </div>
+          </li>
+
+          <li id="2" class="">
+            <div class="todo-icon"><i class="icon-leaf"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Biology & Ecology
+              </h4>
+            </div>
+          </li>
+
+          <li id="basic-science" class="">
+            <div class="todo-icon"><i class="icon-beaker"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Basic Science
+              </h4>
+            </div>
+          </li>
+
+          <li id="earth-science" class="">
+            <div class="todo-icon"><i class="icon-globe"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Earth Science
+              </h4>
+            </div>
+          </li>
+
+          <li id="social-science" class="">
+            <div class="todo-icon"><i class="icon-group"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Social Science
+              </h4>
+            </div>
+          </li>
+          <li id="literiture-and-art" class="">
+            <div class="todo-icon"><i class="icon-pencil"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Literiture & Art
+              </h4>
+            </div>
+          </li>
+          <li id="applied-science" class="">
+            <div class="todo-icon"><i class="icon-cog"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Applied Science
+              </h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div> <!-- /todo list -->
+
+    <div class="span8 pull-right">
+      <%= yield %>
+    </div> <!-- /video -->
+  </div>  
+  </div>
+  <%= render "partial/footer" %>
+</body>
+<%= javascript_include_tag "application" %>
+</html>

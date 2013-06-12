@@ -1,0 +1,16 @@
+<% @articles.each do |article| %>
+<div class="article <%= article.advice_category %>">
+<blockquote>
+<h1><span class="title-icon"><i class="<%= article.icon %>"></i></span><%= article.title %></span></h1>
+<small><%= article.author %></small>
+</blockquote>
+<% article.content.split("\n").each do |paragraph| %>
+	<p><%= paragraph %></p>
+<% end %>
+<p class="text-right"><small><i class="icon-map-marker">&nbsp;&nbsp;</i>original source: <%= link_to article.url[0..50] + "...", article.url %>
+</small></p>
+
+<br>
+
+</div>
+<% end %>
