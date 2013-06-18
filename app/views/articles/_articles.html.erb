@@ -1,0 +1,63 @@
+<% articles.each do |article| %>
+<div class="article accordion" id="article_<%= article.id %>">
+  <div class="accordion-group">
+    <div class="accordion-heading <%= article.advice_category %>">
+      <blockquote>
+      <h1><span class="title-icon"><i class="<%= article.icon %>"></i></span><%= article.title %></span></h1>
+      <% if !article.author.empty? %>
+      <small><%= article.author %></small>
+      <% end %>
+      </blockquote>
+      <div class="summary">
+
+      <% if !article.picture_url.empty? %>
+      <img src="<%= article.picture_url %>" class="img-polaroid">
+      <% end %>
+
+      <% if !article.content.empty? %>
+      <p><%= article.content[0..80] %>...</p>
+      <% end %>
+
+      <div id="collapse_<%= article.id %>" class="accordion-body collapse" style="height: 0px;">
+      <div class="accordion-inner">
+        <% article.content.split("\n").each do |paragraph| %>
+          <p><%= paragraph %></p>
+        <% end %>
+        <p class="text-right"><small><i class="icon-map-marker">&nbsp;&nbsp;</i>original source: <%= link_to article.url[0..50] + "...", article.url %>
+        </small></p>
+      </div>
+      The article should be classified to:
+      <div class="btn-toolbar">
+        <div class="btn-group">
+          <button class="btn">
+            <i class="icon-time"></i>
+          </button>
+          <button class="btn">
+            <i class="icon-leaf"></i>
+          </button>
+          <button class="btn">
+            <i class="icon-cog"></i>
+          </button>
+          <button class="btn">
+            <i class="icon-globe"></i>
+          </button>
+          <button class="btn">
+            <i class="icon-group"></i>
+          </button>
+          <button class="btn">
+            <i class="icon-pencil"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+      <a class="accordion-toggle pull-right btn btn-mini" data-toggle="collapse" data-parent="#article_<%= article.id %>" href="#collapse_<%= article.id %>">
+        read more
+      </a>
+      </div>
+      
+      
+    </div>
+    
+  </div>
+</div>
+<% end %>

@@ -11,17 +11,21 @@
 <body data-twttr-rendered="true">
   <div class="container">
     <div class="demo-headline">
-        <h1 class="demo-logo">
-          <div class="logo"></div>
-          CrysTOEFL
-          <small>Let's prepare for TOEFL!</small>
-        </h1>
+      <h1 class="demo-logo">
+        <div class="logo"></div>
+        CrysTOEFL
+      </h1>
+      <%= form_tag("/articles/search", :method => "get", :class => "form-search") do %>
+        <%= text_field_tag(:q, nil, :class => "input-medium search-query", :placeholder => "Keyword") %>
+        <%= text_field_tag(:page, 1, :style => "display:none") %>
+        <%= submit_tag("Search", :class => "btn") %>
+      <% end %>
       </div>
   <div class="row">
     <div class="span4">
-      <div class="todo mrm">
+      <div class="todo mrm" data-spy="affix" data-offset-top="490">
         <div class="todo-search">
-          <input class="todo-search-field" type="search" value="" placeholder="Search">
+          <input class="todo-search-field" type="search" value="" placeholder="Category List">
         </div>
         <ul>
           <li id="1" class="">
@@ -42,41 +46,7 @@
             </div>
           </li>
 
-          <li id="basic-science" class="">
-            <div class="todo-icon"><i class="icon-beaker"></i></div>
-            <div class="todo-content">
-              <h4 class="todo-name">
-                Basic Science
-              </h4>
-            </div>
-          </li>
-
-          <li id="earth-science" class="">
-            <div class="todo-icon"><i class="icon-globe"></i></div>
-            <div class="todo-content">
-              <h4 class="todo-name">
-                Earth Science
-              </h4>
-            </div>
-          </li>
-
-          <li id="social-science" class="">
-            <div class="todo-icon"><i class="icon-group"></i></div>
-            <div class="todo-content">
-              <h4 class="todo-name">
-                Social Science
-              </h4>
-            </div>
-          </li>
-          <li id="literiture-and-art" class="">
-            <div class="todo-icon"><i class="icon-pencil"></i></div>
-            <div class="todo-content">
-              <h4 class="todo-name">
-                Literiture & Art
-              </h4>
-            </div>
-          </li>
-          <li id="applied-science" class="">
+          <li id="3" class="">
             <div class="todo-icon"><i class="icon-cog"></i></div>
             <div class="todo-content">
               <h4 class="todo-name">
@@ -84,16 +54,44 @@
               </h4>
             </div>
           </li>
+
+          <li id="4" class="">
+            <div class="todo-icon"><i class="icon-globe"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Theoretical Science
+              </h4>
+            </div>
+          </li>
+
+          <li id="5" class="">
+            <div class="todo-icon"><i class="icon-group"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Social Science
+              </h4>
+            </div>
+          </li>
+          <li id="6" class="">
+            <div class="todo-icon"><i class="icon-pencil"></i></div>
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Literiture & Art
+              </h4>
+            </div>
+          </li>
         </ul>
       </div>
     </div> <!-- /todo list -->
 
-    <div class="span8 pull-right">
+    <div id="article_container" class="span8 pull-right">
+      <div pager="1">
       <%= yield %>
-    </div> <!-- /video -->
+      </div>
+      <div pager="2"></div>
+    </div> <!-- /content -->
   </div>  
   </div>
-  <%= render "partial/footer" %>
-</body>
+  </body>
 <%= javascript_include_tag "application" %>
 </html>

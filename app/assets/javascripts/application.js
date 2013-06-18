@@ -19,20 +19,28 @@ $(function () {
     // Custom selects
     $("select").dropkick();
 });
-
 $(document).ready(function() {
     // Todo list
     // Select articles
-    $(".article").hide();
+    //$(".article").hide();
+    
+    $(".todo li").attr("class","todo-done");
+
     $(".todo li").click(function() {
         $(this).toggleClass("todo-done");
         var tmp = "." + $(this).attr("id")
-        if ($(this).attr("class") != "todo-done")
+        if ($(this).attr("class") != "todo-done") {
             $(tmp).fadeOut();
-        else
+            $(tmp).parent().css("border", "0px");
+        }
+        else {
             $(tmp).fadeIn();
+            $(tmp).parent().css("border", "");
+        }
     });
 
+    $(".mrm").affix();
+    
     // Init tooltips
     $("[data-toggle=tooltip]").tooltip("show");
 

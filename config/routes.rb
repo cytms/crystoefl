@@ -5,7 +5,7 @@ Crystoefl::Application.routes.draw do
   get "articles/search"
 
   get "articles/feedback"
-
+  get "articles/get_datas"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

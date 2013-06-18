@@ -8,7 +8,9 @@ class CreateArticles < ActiveRecord::Migration
       t.string :picture_url
       t.string :title
       t.string :author
-
+      t.string :summary
+      t.string :feedback
+      t.string :knn_category
       t.timestamps
     end
   end

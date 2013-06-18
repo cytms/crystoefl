@@ -21,6 +21,9 @@ ActiveRecord::Schema.define(:version => 20130601051713) do
     t.string   "picture_url"
     t.string   "title"
     t.string   "author"
+    t.string   "summary"
+    t.string   "feedback"
+    t.string   "knn_category"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
