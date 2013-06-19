@@ -25,6 +25,16 @@
         <% end %>
         <p class="text-right"><small><i class="icon-map-marker">&nbsp;&nbsp;</i>original source: <%= link_to article.url[0..50] + "...", article.url %>
         </small></p>
+        <%#= @array %>
+        <% vocab_array = [] %>
+        <% article.content.split(" ").each do |term|%>
+          <% stem_term = term.stem%>
+          <% if @array.include?(stem_term) %>
+            <% vocab_array.push(stem_term) %>
+          <% end%>
+        <% end %>
+        <% vocab_array.uniq!%>
+        <%= vocab_array%>
       </div>
       The article should be classified to:
       <div class="btn-toolbar">

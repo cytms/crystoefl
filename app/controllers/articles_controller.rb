@@ -1,9 +1,19 @@
 # encoding: UTF-8
 class ArticlesController < ApplicationController
   require 'json'
+  require 'stemmify'
   #require 'kaminari'
   def index
     @articles = Article.page(params[:page]).per(100)
+
+    @array = []
+    File.foreach("public/word_list.txt") do |line|
+      @array.push(line.strip.stem)
+      puts @array.last
+    end
+
+
+
     respond_to do |format|
       if params[:page]=="1" or params[:page]==nil
         format.html
@@ -24,6 +34,12 @@ class ArticlesController < ApplicationController
         json_file = JSON.parse(content)
         Article.create(:url => json_file["url"], :content => json_file["content"], :web_category => json_file["web_category"], :advice_category => json_file["advice_category"], :picture_url => json_file["picture_url"], :title => json_file["title"], :author => json_file["author"], :knn_category => category)
       end
+
+      # stemming 
+      # match 
+      # translate
+      # db: AddColumn text
+
     end
   	redirect_to '/'
   end
