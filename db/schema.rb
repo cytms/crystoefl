@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130620084952) do
+ActiveRecord::Schema.define(:version => 20130601051713) do
 
   create_table "articles", :force => true do |t|
     t.string   "url"
@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(:version => 20130620084952) do
     t.string   "summary"
     t.string   "feedback"
     t.string   "knn_category"
+    t.text     "vocabulary"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.text     "vocabulary"
   end
 
 end

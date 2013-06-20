@@ -11,6 +11,7 @@ class CreateArticles < ActiveRecord::Migration
       t.string :summary
       t.string :feedback
       t.string :knn_category
+      t.text :vocabulary
       t.timestamps
     end
   end

@@ -8,12 +8,11 @@ class ArticlesController < ApplicationController
 
     if params[:category].nil?
       @articles = Article.page(params[:page]).per(100)
-      puts '---------------------------',params[:category], '---------------------------'
     else
       @articles = Article.where(:knn_category => params[:category]).page(params[:page]).per(100)
-      puts '---------------------------',params[:category], '---------------------------'
     end
-      
+    @limit_page_num = User.limit(100).count
+
     @array = []
     File.foreach("public/word_list.txt") do |line|
       @array.push(line.strip.stem)
