@@ -5,8 +5,15 @@ class ArticlesController < ApplicationController
   require 'open-uri'
   #require 'kaminari'
   def index
-    @articles = Article.page(params[:page]).per(100)
 
+    if params[:category].nil?
+      @articles = Article.page(params[:page]).per(100)
+      puts '---------------------------',params[:category], '---------------------------'
+    else
+      @articles = Article.where(:knn_category => params[:category]).page(params[:page]).per(100)
+      puts '---------------------------',params[:category], '---------------------------'
+    end
+      
     @array = []
     File.foreach("public/word_list.txt") do |line|
       @array.push(line.strip.stem)
@@ -16,7 +23,8 @@ class ArticlesController < ApplicationController
 
 
     respond_to do |format|
-      if params[:page]=="1" or params[:page]==nil
+      #if params[:category]!=nil and (params[:page]=="1" or params[:page]==nil)
+      if params[:page].nil? and params[:category].nil?
         format.html
       else
         format.html{render :layout => false}
