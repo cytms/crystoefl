@@ -1,5 +1,5 @@
 class Article < ActiveRecord::Base
-  attr_accessible :url, :content, :web_category, :advice_category, :picture_url, :title, :author, :knn_category, :summary, :feedback
+  attr_accessible :url, :content, :web_category, :advice_category, :picture_url, :title, :author, :knn_category, :summary, :feedback, :vocabulary
 
   def icon
   	case self.knn_category
