@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
   require 'json'
   require 'stemmify'
   require 'open-uri'
-  #require 'nokogiri'
+  require 'nokogiri'
   #require 'kaminari'
   def index
     if params[:category].nil?
@@ -37,6 +37,7 @@ class ArticlesController < ApplicationController
   	puts "get_datas..."
 
     # read vocabulary
+    Article.delete_all
     @dictionary = []
     File.foreach("public/word_list.txt") do |line|
       @dictionary.push(line.strip.stem)
@@ -59,17 +60,20 @@ class ArticlesController < ApplicationController
         article = json_file["content"]
 
         @vocab_hash = Hash.new
-        
-        article.split(" ").each do |term|
-          stem_term = term.stem
-          if @dictionary.include?(stem_term)
-            @vocab_hash[term] = stem_term
+        begin
+          article.split(" ").each do |term|
+            stem_term = term.stem
+            if @dictionary.include?(stem_term)
+              @vocab_hash[term] = stem_term
+            end
+            #@dictionary.each do |dic_term|
+            #  if term.match(dic_term)
+            #    @vocab_hash[term] = dic_term
+            #  end
+            #end
           end
-          #@dictionary.each do |dic_term|
-          #  if term.match(dic_term)
-          #    @vocab_hash[term] = dic_term
-          #  end
-          #end
+        rescue
+          json_file["content"] = nil
         end
         #puts @vocab_hash
         @vocab_with_translate = Hash.new
@@ -85,13 +89,6 @@ class ArticlesController < ApplicationController
 
         Article.create(:url => json_file["url"], :content => json_file["content"], :web_category => json_file["web_category"], :advice_category => json_file["advice_category"], :picture_url => json_file["picture_url"], :title => json_file["title"], :author => json_file["author"], :knn_category => hash[file_name], :vocabulary => @vocab_with_translate.to_json, :summary => json_file["summary"])
       end
-      puts counter
-      counter = counter + 1
-      if counter > 0 
-        break
-      end
-
-
     end
   	# redirect_to '/'
   end
