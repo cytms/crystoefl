@@ -39,7 +39,7 @@ $(document).ready(function() {
         }
     });
 
-    $(".mrm").affix();
+    //$(".mrm").affix();
     
     // Init tooltips
     $("[data-toggle=tooltip]").tooltip("show");
