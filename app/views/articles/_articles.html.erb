@@ -1,7 +1,8 @@
 <% articles.each do |article| %>
+<% if !article.content.nil? %>
 <div class="article accordion" id="article_<%= article.id %>">
   <div class="accordion-group">
-    <div class="accordion-heading <%= article.advice_category %>">
+    <div class="accordion-heading <%= article.knn_category %>">
       <blockquote>
       <h1><span class="title-icon"><i class="<%= article.icon %>"></i></span><%= article.title %></span></h1>
       <% if !article.author.empty? %>
@@ -33,6 +34,9 @@
           <% tt = ve %>
           <% end %>
         <% end %>
+        <div class="container">
+          <%= article.vocabulary %>
+        </div>
       </div>
       The article should be classified to:
       <div class="btn-toolbar">
@@ -69,3 +73,4 @@
   </div>
 </div>
 <% end %>
+<% end%>
