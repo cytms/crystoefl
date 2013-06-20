@@ -35,7 +35,7 @@ class ArticlesController < ApplicationController
 
   def get_datas
   	puts "get_datas..."
-
+    Article.delete_all
     # read vocabulary
     @dictionary = []
     File.foreach("public/word_list.txt") do |line|
@@ -59,7 +59,7 @@ class ArticlesController < ApplicationController
         article = json_file["content"]
 
         @vocab_hash = Hash.new
-        
+            
         article.split(" ").each do |term|
           stem_term = term.stem
           if @dictionary.include?(stem_term)
@@ -79,7 +79,11 @@ class ArticlesController < ApplicationController
           @link = "http://tw.dictionary.yahoo.com/dictionary?p=#{key}"
           #doc = Nokogiri::HTML(open(@link))
           @translate = Nokogiri::HTML(open(@link)).css('li.explanation_pos_wrapper')
-          p @translate
+          # @translate.encoding = 'utf-8' 
+          
+          # puts @translate.text, @translate.text.encoding
+          # @translate = @translate
+          # p @translate
           @vocab_with_translate[key] = @translate.to_xml # .text could be eliminated 
         end
 
@@ -87,7 +91,7 @@ class ArticlesController < ApplicationController
       end
       puts counter
       counter = counter + 1
-      if counter > 0 
+      if counter > 4
         break
       end
 

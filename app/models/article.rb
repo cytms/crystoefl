@@ -1,6 +1,12 @@
 class Article < ActiveRecord::Base
   attr_accessible :url, :content, :web_category, :advice_category, :picture_url, :title, :author, :knn_category, :summary, :feedback, :vocabulary
-
+  def v
+    h = Hash.new
+    JSON.parse(self.vocabulary).each do |k, v|
+      h[k] = Nokogiri::HTML(%{#{v}}).text
+    end
+    return h
+  end
   def icon
   	case self.knn_category
   	 when "1"
