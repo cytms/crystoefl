@@ -15,7 +15,7 @@
       <% end %>
 
       <% if !article.content.empty? %>
-      <p><%= article.content[0..80] %>...</p>
+      <p><%= article.summary %>...</p>
       <% end %>
 
       <div id="collapse_<%= article.id %>" class="accordion-body collapse" style="height: 0px;">

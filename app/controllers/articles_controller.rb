@@ -3,15 +3,15 @@ class ArticlesController < ApplicationController
   require 'json'
   require 'stemmify'
   require 'open-uri'
+  #require 'nokogiri'
   #require 'kaminari'
   def index
-
     if params[:category].nil?
       @articles = Article.page(params[:page]).per(100)
     else
       @articles = Article.where(:knn_category => params[:category]).page(params[:page]).per(100)
     end
-    @limit_page_num = User.limit(100).count
+    #@limit_page_num = Article.limit(100).count
 
     @array = []
     File.foreach("public/word_list.txt") do |line|
@@ -40,54 +40,57 @@ class ArticlesController < ApplicationController
     @dictionary = []
     File.foreach("public/word_list.txt") do |line|
       @dictionary.push(line.strip.stem)
-      puts @dictionary.last
+      puts line
     end
 
     counter = 0 # for testing only
-
-  	File.foreach('public/articles/Result.txt') do |line|
+    hash = Hash.new
+    
+    File.foreach('public/Result.txt') do |line|
       file, category = line.split(' ')
-      folder, tmp = file.split('_')
-      File.foreach("public/articles/#{folder}/#{file}") do |content|
-        json_file = JSON.parse(content)
+      hash[file] = category
+    end
 
+    file_ary = hash.keys.sample(hash.length)
+
+    file_ary.each do |file_name|
+      File.foreach("public/articles/#{file_name}") do |content|
+        json_file = JSON.parse(content)
         article = json_file["content"]
-        @vocab_hash = {}
+
+        @vocab_hash = Hash.new
+        
         article.split(" ").each do |term|
           stem_term = term.stem
           if @dictionary.include?(stem_term)
             @vocab_hash[term] = stem_term
           end
+          #@dictionary.each do |dic_term|
+          #  if term.match(dic_term)
+          #    @vocab_hash[term] = dic_term
+          #  end
+          #end
         end
-        
-        puts @vocab_hash
+        #puts @vocab_hash
+        @vocab_with_translate = Hash.new
 
-        @vocab_with_translate = {}
-
-        @vocab_hash.each_key{|key|
-          @link = "http://tw.dictionary.yahoo.com/dictionary?p=" + key.to_s
-
-          doc = Nokogiri::HTML(open(@link))
-          @translate = doc.css('li.explanation_pos_wrapper')
-
+        @vocab_hash.each_key do |key|
+          key = key.to_s.downcase
+          @link = "http://tw.dictionary.yahoo.com/dictionary?p=#{key}"
+          #doc = Nokogiri::HTML(open(@link))
+          @translate = Nokogiri::HTML(open(@link)).css('li.explanation_pos_wrapper')
+          p @translate
           @vocab_with_translate[key] = @translate.to_xml # .text could be eliminated 
-          
-        }
+        end
 
-        
-
-        Article.create(:url => json_file["url"], :content => json_file["content"], :web_category => json_file["web_category"], :advice_category => json_file["advice_category"], :picture_url => json_file["picture_url"], :title => json_file["title"], :author => json_file["author"], :knn_category => category, :vocabulary => @vocab_with_translate.to_json)
+        Article.create(:url => json_file["url"], :content => json_file["content"], :web_category => json_file["web_category"], :advice_category => json_file["advice_category"], :picture_url => json_file["picture_url"], :title => json_file["title"], :author => json_file["author"], :knn_category => hash[file_name], :vocabulary => @vocab_with_translate.to_json, :summary => json_file["summary"])
+      end
+      puts counter
+      counter = counter + 1
+      if counter > 0 
+        break
       end
 
-
-      counter = counter + 1 # for testing only
-      if counter > 6
-          break
-      end
-      # stemming 
-      # match 
-      # translate
-      # db: AddColumn text
 
     end
   	# redirect_to '/'
