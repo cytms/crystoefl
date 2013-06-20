@@ -1,0 +1,7 @@
+get datas done
+
+<%= @vocab_hash%>
+
+<%= @link%>
+
+<%= @vocab_with_translate%>
