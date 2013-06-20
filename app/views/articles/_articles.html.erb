@@ -26,16 +26,14 @@
         <% end %>
         <p class="text-right"><small><i class="icon-map-marker">&nbsp;&nbsp;</i>original source: <%= link_to article.url[0..50] + "...", article.url %>
         </small></p>
-        <%#= @array %>
-        <%= article.v.each do |k, v| %>
+        <div class="well">
+        <% article.v.each do |k, v| %>
         <h3><%= k %></h3>
         <% v.split(/ \n+/).each do |ve| %>
           <%= ve %></br>
-          <% tt = ve %>
           <% end %>
         <% end %>
-        <div class="container">
-          <%= article.vocabulary %>
+        
         </div>
       </div>
       The article should be classified to:
