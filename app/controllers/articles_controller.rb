@@ -71,13 +71,13 @@ class ArticlesController < ApplicationController
           doc = Nokogiri::HTML(open(@link))
           @translate = doc.css('li.explanation_pos_wrapper')
 
-          @vocab_with_translate[key] = @translate.text # .text could be eliminated 
-
+          @vocab_with_translate[key] = @translate.to_xml # .text could be eliminated 
+          
         }
 
         
 
-        Article.create(:url => json_file["url"], :content => json_file["content"], :web_category => json_file["web_category"], :advice_category => json_file["advice_category"], :picture_url => json_file["picture_url"], :title => json_file["title"], :author => json_file["author"], :knn_category => category)
+        Article.create(:url => json_file["url"], :content => json_file["content"], :web_category => json_file["web_category"], :advice_category => json_file["advice_category"], :picture_url => json_file["picture_url"], :title => json_file["title"], :author => json_file["author"], :knn_category => category, :vocabulary => @vocab_with_translate.to_json)
       end
 
 
